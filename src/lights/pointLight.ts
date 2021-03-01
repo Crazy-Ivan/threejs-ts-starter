@@ -15,7 +15,7 @@ export const getPointLight = (
   name: string,
   config: Partial<typeof defaultConfig> = defaultConfig
 ) => {
-  const c = { config, ...defaultConfig };
+  const c = {...defaultConfig, ...config };
   const pointLight = new THREE.PointLight(c.color, c.intensity);
   pointLight.position.x = c.position.x;
   pointLight.position.y = c.position.y;

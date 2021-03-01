@@ -3,7 +3,7 @@ import { browserManager } from "../managers/browserManager";
 
 export const getRenderer = (): THREE.WebGLRenderer => {
   const defaultValues = {
-    antialias: true,
+    antialias: false,
     alpha: false,
   };
 

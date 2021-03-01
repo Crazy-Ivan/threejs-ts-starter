@@ -6,7 +6,7 @@ const defaultValues = {
   fov: 45,
   aspect: browserManager.getWidth() / browserManager.getHeight(),
   near: 1,
-  far: 100,
+  far: 15,
   position: { x: 2, y: 2, z: 2 },
 };
 
@@ -14,7 +14,7 @@ export const getPerspectiveCamera = (
   name: string,
   options: Partial<typeof defaultValues> = defaultValues
 ): THREE.PerspectiveCamera => {
-  const o = { options, ...defaultValues };
+  const o = { ...defaultValues, ...options };
 
   const { fov, aspect, near, far, position } = o;
   const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
@@ -27,14 +27,13 @@ export const getPerspectiveCamera = (
 
   camera.position.set(position.x, position.y, position.z);
 
-  gui.addFolder(`camera: ${name}`);
-  gui.add(camera, "fov").min(1).max(180).onFinishChange(update);
-  gui.add(camera, "far").min(2).max(1000).onFinishChange(update);
-  gui.add(camera, "near").min(1).max(100).onFinishChange(update);
-  gui.add(camera.position, "x").min(-50).max(50);
-  gui.add(camera.position, "y").min(-50).max(50);
-  gui.add(camera.position, "z").min(-50).max(50);
-
+  const cameraFolder = gui.addFolder(`camera: ${name}`);
+  cameraFolder.add(camera, "fov").min(1).max(180).onFinishChange(update);
+  cameraFolder.add(camera, "far").min(2).max(1000).onFinishChange(update);
+  cameraFolder.add(camera, "near").min(1).max(100).onFinishChange(update);
+  cameraFolder.add(camera.position, "x").min(-50).max(50);
+  cameraFolder.add(camera.position, "y").min(-50).max(50);
+  cameraFolder.add(camera.position, "z").min(-50).max(50);
 
   return camera;
 };
